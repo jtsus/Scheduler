@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public enum SchedulerController {
-    INSTANCE;
+public class SchedulerController {
+    public static final SchedulerController INSTANCE = new SchedulerController();
 
     /**
      * ALL SYNCHRONIZED DATA WILL BE STORED HERE
