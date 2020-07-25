@@ -18,40 +18,6 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 
 minecraft {
     mappings channel: 'stable', version: '39-1.12'
-
-    runs {
-        client {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                scheduler {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        server {
-            workingDirectory project.file('run')
-
-            // Recommended logging data for a userdev environment
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-            // Recommended logging level for the console
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                scheduler {
-                    source sourceSets.main
-                }
-            }
-        }
-    }
 }
 
 repositories {
@@ -81,6 +47,13 @@ jar {
     configurations.shade.each { dep ->
         from(project.zipTree(dep)){
             exclude 'META-INF', 'META-INF/**'
+            exclude 'AUTHORS'
+            exclude 'LICENSE'
+            exclude 'README.md'
+            exclude 'META-INF/**'
+            exclude 'changelog.txt'
+            exclude 'credentials.json'
+            exclude 'latestchanges.html'
         }
     }
 }
