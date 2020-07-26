@@ -1,12 +1,12 @@
 package net.eterniamc.scheduler;
 
 import com.google.common.collect.Lists;
-import net.eterniamc.scheduler.sync.Scheduled;
+import net.eterniamc.scheduler.annotation.Scheduled;
 
 import java.lang.reflect.*;
 import java.util.*;
 
-public class SynchronizationServiceInspector {
+public class ScheduledServiceInspector {
 
     public static List<ScheduledElement> parseElementsFrom(Object source) {
         return getElements(source, getAllMethods(source.getClass()));

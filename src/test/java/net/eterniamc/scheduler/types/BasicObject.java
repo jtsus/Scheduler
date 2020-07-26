@@ -1,7 +1,8 @@
-package net.eterniamc.scheduler;
+package net.eterniamc.scheduler.types;
 
 import lombok.Getter;
-import net.eterniamc.scheduler.sync.Scheduled;
+import net.eterniamc.scheduler.annotation.Delayed;
+import net.eterniamc.scheduler.annotation.Scheduled;
 
 public class BasicObject {
     @Getter

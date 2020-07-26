@@ -1,14 +1,15 @@
 package net.eterniamc.scheduler;
 
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import net.eterniamc.scheduler.types.BasicObject;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class SchedulerControllerTest {
+public class SchedulerControllerTest {
 
-    @BeforeEach
+    @Before
     public void setUp() {
         SchedulerController.INSTANCE.scheduledElements.clear();
         SchedulerController.INSTANCE.asyncScheduledElements.clear();

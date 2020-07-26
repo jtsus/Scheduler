@@ -1,4 +1,4 @@
-package net.eterniamc.scheduler.sync;
+package net.eterniamc.scheduler.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
