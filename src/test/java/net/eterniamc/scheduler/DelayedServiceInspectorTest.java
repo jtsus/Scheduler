@@ -4,6 +4,7 @@ import lombok.SneakyThrows;
 import net.eterniamc.scheduler.runner.SeparateClassloaderTestRunner;
 import net.eterniamc.scheduler.types.BasicDelayCarrier;
 import net.eterniamc.scheduler.types.DelayCarrier;
+import net.eterniamc.scheduler.types.pack.OtherBasicDelayCarrier;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -13,8 +14,19 @@ import static org.junit.Assert.*;
 public class DelayedServiceInspectorTest {
 
     @Test
+    public void packageBasedLookup() {
+        SchedulerController.INSTANCE.delayedElements.clear();
+        SchedulerController.INSTANCE.registerAllDelayedMethods("net.eterniamc.scheduler.types.pack");
+
+        OtherBasicDelayCarrier.doSomething();
+
+        assertEquals(1, SchedulerController.INSTANCE.delayedElements.size());
+    }
+
+    @Test
     public void delayedMethodGetsHookedInto() {
-        SchedulerController.INSTANCE.registerDelayedMethods("net.eterniamc.scheduler.types.BasicDelayCarrier");
+        SchedulerController.INSTANCE.delayedElements.clear();
+        SchedulerController.INSTANCE.registerDelayedMethodsIn("net.eterniamc.scheduler.types.BasicDelayCarrier");
 
         BasicDelayCarrier.doSomething();
 
@@ -24,7 +36,7 @@ public class DelayedServiceInspectorTest {
     @Test
     @SneakyThrows
     public void delayedMethodGetsDelayed() {
-        SchedulerController.INSTANCE.registerDelayedMethods("net.eterniamc.scheduler.types.DelayCarrier");
+        SchedulerController.INSTANCE.registerDelayedMethodsIn("net.eterniamc.scheduler.types.DelayCarrier");
 
         DelayCarrier object = new DelayCarrier();
 

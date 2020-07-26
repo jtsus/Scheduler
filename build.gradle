@@ -32,6 +32,7 @@ configurations {
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
 
+    shade 'org.reflections:reflections:0.9.12'
     shade group: 'org.javassist', name: 'javassist', version: '3.27.0-GA'
     shade 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'

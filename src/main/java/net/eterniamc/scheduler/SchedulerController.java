@@ -2,9 +2,13 @@ package net.eterniamc.scheduler;
 
 import com.google.common.collect.Sets;
 import lombok.SneakyThrows;
+import net.eterniamc.scheduler.annotation.Delayed;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.TypeAnnotationsScanner;
 
 import java.lang.reflect.Method;
 import java.util.List;
@@ -71,8 +75,21 @@ public enum SchedulerController {
      *
      * @param clazz full path of class to register (java.lang.Object)
      */
-    public void registerDelayedMethods(String clazz) {
+    public void registerDelayedMethodsIn(String clazz) {
         DelayedServiceInspector.register(clazz);
+    }
+
+    /**
+     * Finds and loads all delayed methods in a package
+     *
+     * @param pkg The package path (java.lang)
+     */
+    public void registerAllDelayedMethods(String pkg) {
+        Reflections reflections = new Reflections(pkg, new SubTypesScanner(false));
+
+        for (String aClass : reflections.getAllTypes()) {
+            DelayedServiceInspector.register(aClass);
+        }
     }
 
     /**
