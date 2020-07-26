@@ -7,11 +7,37 @@ import java.lang.annotation.Target;
 
 @Target({ ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
+@SuppressWarnings("unused")
 public @interface Scheduled {
     /**
-     * @return The rate of refresh
+     * @return The rate of refresh in ticks
      */
-    Rate rate() default Rate.TICK;
+    long ticks() default 0;
+
+    /**
+     * @return The rate of refresh in milliseconds
+     */
+    long milliseconds() default 0;
+
+    /**
+     * @return The rate of refresh in seconds
+     */
+    long seconds() default 0;
+
+    /**
+     * @return The rate of refresh in minutes
+     */
+    long minutes() default 0;
+
+    /**
+     * @return The rate of refresh in hours
+     */
+    long hours() default 0;
+
+    /**
+     * @return The rate of refresh in
+     */
+    long days() default 0;
 
     /**
      * @return Whether the method should be executed asynchronously

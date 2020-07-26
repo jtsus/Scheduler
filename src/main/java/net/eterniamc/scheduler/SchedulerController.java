@@ -25,8 +25,6 @@ public enum SchedulerController {
 
     private boolean initialized = false;
 
-    private SchedulerController() {}
-
     public void initialize() {
         if (initialized) {
             return;

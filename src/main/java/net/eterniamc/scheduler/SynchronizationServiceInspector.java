@@ -1,7 +1,6 @@
 package net.eterniamc.scheduler;
 
 import com.google.common.collect.Lists;
-import net.eterniamc.scheduler.sync.Rate;
 import net.eterniamc.scheduler.sync.Scheduled;
 
 import java.lang.reflect.*;
@@ -31,9 +30,9 @@ public class SynchronizationServiceInspector {
                 object.setAccessible(true);
             }
 
-            Rate declaredRate = getRate(object);
+            long declaredRate = getRate(object);
 
-            if (declaredRate == null) {
+            if (declaredRate <= 0) {
                 continue;
             }
 
@@ -43,14 +42,23 @@ public class SynchronizationServiceInspector {
         return elements;
     }
 
-    private static Rate getRate(AnnotatedElement element) {
+    private static long getRate(AnnotatedElement element) {
         if (!element.isAnnotationPresent(Scheduled.class)) {
-            return null;
+            return -1;
         }
 
         Scheduled annotation = element.getAnnotation(Scheduled.class);
 
-        return annotation.rate();
+        long rate = 0;
+
+        rate += annotation.milliseconds();
+        rate += annotation.ticks() * 50;
+        rate += annotation.seconds() * 1000;
+        rate += annotation.minutes() * 60000;
+        rate += annotation.hours() * 3600000;
+        rate += annotation.days() * 86400000;
+
+        return rate;
     }
 
     private static boolean isAsync(AnnotatedElement element) {

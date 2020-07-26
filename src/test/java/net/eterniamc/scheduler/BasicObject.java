@@ -1,24 +1,23 @@
 package net.eterniamc.scheduler;
 
 import lombok.Getter;
-import net.eterniamc.scheduler.sync.Rate;
 import net.eterniamc.scheduler.sync.Scheduled;
 
 public class BasicObject {
     @Getter
     private int updates;
 
-    @Scheduled(rate = Rate.HALF_TICK, async = true)
+    @Scheduled(milliseconds = 25, async = true)
     public void update() {
         updates++;
     }
 
-    @Scheduled(rate = Rate.FAST)
+    @Scheduled(seconds = 1)
     public void updateSomething() {
 
     }
 
-    @Scheduled(rate = Rate.INSTANT)
+    @Scheduled(milliseconds = 1)
     public void render() {
 
     }
