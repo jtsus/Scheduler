@@ -11,8 +11,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class SchedulerController {
-    public static final SchedulerController INSTANCE = new SchedulerController();
+public enum SchedulerController {
+    INSTANCE;
 
     /**
      * ALL SYNCHRONIZED DATA WILL BE STORED HERE
@@ -24,6 +24,8 @@ public class SchedulerController {
     protected final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
     private boolean initialized = false;
+
+    private SchedulerController() {}
 
     public void initialize() {
         if (initialized) {
