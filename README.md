@@ -31,3 +31,9 @@ processAnnotationsIn(packageName) before the classes holding the annotations are
 
 This annotation changes the bytecode of classes by basically wrapping methods annotated with @Delayed with
 a call to SchedulerController#delay().
+
+Adding to your project
+-
+
+Scheduler can easily be added to your project using the JitPack dependency. Go [here](https://jitpack.io/#JustinSamaKun/Scheduler)
+for more information.
