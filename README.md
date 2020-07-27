@@ -24,7 +24,7 @@ You may call SchedulerController#dismissSynchronizationService() to stop all sch
 
 #### @Delayed
 
-The Scheduled annotation takes in a double for each time unit, and a boolean for whether to schedule the target method 
+The Scheduled annotation takes in a double for each time unit, and a boolean for whether to delay and call the target method 
 out of sync or not. The delay takes place before the method is actually called is equal to the sum of all times entered.
 In order to have the annotation take effect you must call SchedulerController#processAnnotationsFor(className) or 
 processAnnotationsIn(packageName) before the classes holding the annotations are loaded.
