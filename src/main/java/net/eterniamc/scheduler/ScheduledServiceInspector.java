@@ -13,12 +13,9 @@ public class ScheduledServiceInspector {
     }
 
     public static Method[] getAllMethods(Class<?> aClass) {
-        List<Method> methods = new ArrayList<>();
-        do {
-            Collections.addAll(methods, aClass.getDeclaredMethods());
-            aClass = aClass.getSuperclass();
-        } while (aClass != null);
-        return methods.toArray(new Method[0]);
+        return Arrays.stream(aClass.getDeclaredMethods())
+                .filter(method -> method.isAnnotationPresent(Scheduled.class))
+                .toArray(Method[]::new);
     }
 
     private static List<ScheduledElement> getElements(Object source, Method[] objects) {
@@ -30,44 +27,17 @@ public class ScheduledServiceInspector {
                 object.setAccessible(true);
             }
 
-            long declaredRate = getRate(object);
+            AnnotationData data = new AnnotationData(object.getAnnotation(Scheduled.class));
+
+            long declaredRate = data.getTime();
 
             if (declaredRate <= 0) {
                 continue;
             }
 
-            elements.add(new ScheduledElement(source, declaredRate, isAsync(object), object));
+            elements.add(new ScheduledElement(source, declaredRate, data.isAsync(), object));
         }
 
         return elements;
-    }
-
-    private static long getRate(AnnotatedElement element) {
-        if (!element.isAnnotationPresent(Scheduled.class)) {
-            return -1;
-        }
-
-        Scheduled annotation = element.getAnnotation(Scheduled.class);
-
-        long rate = 0;
-
-        rate += annotation.milliseconds();
-        rate += annotation.ticks() * 50;
-        rate += annotation.seconds() * 1000;
-        rate += annotation.minutes() * 60000;
-        rate += annotation.hours() * 3600000;
-        rate += annotation.days() * 86400000;
-
-        return rate;
-    }
-
-    private static boolean isAsync(AnnotatedElement element) {
-        if (!element.isAnnotationPresent(Scheduled.class)) {
-            return false;
-        }
-
-        Scheduled annotation = element.getAnnotation(Scheduled.class);
-
-        return annotation.async();
     }
 }

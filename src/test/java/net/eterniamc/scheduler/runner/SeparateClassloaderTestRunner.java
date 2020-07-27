@@ -24,13 +24,5 @@ public class SeparateClassloaderTestRunner extends BlockJUnit4ClassRunner {
         public TestClassLoader() {
             super(((URLClassLoader)getSystemClassLoader()).getURLs());
         }
-
-        @Override
-        public Class<?> loadClass(String name) throws ClassNotFoundException {
-            if (name.startsWith("org.mypackages.")) {
-                return super.findClass(name);
-            }
-            return super.loadClass(name);
-        }
     }
 }

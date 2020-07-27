@@ -7,7 +7,7 @@ public class DelayCarrier {
     @Getter
     private int updates;
 
-    @Delayed(milliseconds = 10, async = true)
+    @Delayed(ticks = 0.2, async = true)
     public void someCall() {
         updates = 1;
     }

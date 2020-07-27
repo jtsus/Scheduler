@@ -13,6 +13,7 @@ public class SchedulerControllerTest {
     public void setUp() {
         SchedulerController.INSTANCE.scheduledElements.clear();
         SchedulerController.INSTANCE.asyncScheduledElements.clear();
+        SchedulerController.INSTANCE.initialize();
     }
 
     /**
@@ -22,13 +23,11 @@ public class SchedulerControllerTest {
     @SneakyThrows
     public void rate() {
         BasicObject object = new BasicObject();
-        SchedulerController.INSTANCE.initialize();
         SchedulerController.INSTANCE.registerSynchronizationService(object);
 
         Thread.sleep(50);
 
         assertTrue(2 <= object.getUpdates() && object.getUpdates() <= 3);
-        SchedulerController.INSTANCE.executor.shutdown();
     }
 
     @Test

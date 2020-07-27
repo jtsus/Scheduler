@@ -53,6 +53,12 @@ jar {
             exclude 'latestchanges.html'
         }
     }
+    manifest {
+        attributes(
+                'FMLCorePlugin': 'net.eterniamc.scheduler.asm.SchedulerCoreMod',
+                'FMLCorePluginContainsMod': 'false',
+        )
+    }
 }
 
 jar.finalizedBy('reobfJar')

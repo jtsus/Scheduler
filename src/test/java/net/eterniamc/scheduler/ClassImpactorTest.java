@@ -1,42 +1,42 @@
 package net.eterniamc.scheduler;
 
+import junit.framework.TestCase;
 import lombok.SneakyThrows;
 import net.eterniamc.scheduler.runner.SeparateClassloaderTestRunner;
 import net.eterniamc.scheduler.types.BasicDelayCarrier;
 import net.eterniamc.scheduler.types.DelayCarrier;
-import net.eterniamc.scheduler.types.pack.OtherBasicDelayCarrier;
+import net.eterniamc.scheduler.types.pack.AnotherObject;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
-
 @RunWith(SeparateClassloaderTestRunner.class)
-public class DelayedServiceInspectorTest {
+public class ClassImpactorTest extends TestCase {
 
     @Test
-    public void packageBasedLookup() {
+    public void delayedMethodGetsHookedInto() {
         SchedulerController.INSTANCE.delayedElements.clear();
-        SchedulerController.INSTANCE.registerAllDelayedMethods("net.eterniamc.scheduler.types.pack");
+        SchedulerController.INSTANCE.processAnnotationsFor("net.eterniamc.scheduler.types.BasicDelayCarrier");
 
-        OtherBasicDelayCarrier.doSomething();
+        BasicDelayCarrier.doSomething(new Double[0], "yoo");
 
         assertEquals(1, SchedulerController.INSTANCE.delayedElements.size());
     }
 
     @Test
-    public void delayedMethodGetsHookedInto() {
+    public void delayedMethodsInPackageGetsHookedInto() {
         SchedulerController.INSTANCE.delayedElements.clear();
-        SchedulerController.INSTANCE.registerDelayedMethodsIn("net.eterniamc.scheduler.types.BasicDelayCarrier");
+        SchedulerController.INSTANCE.processAnnotationsIn("net.eterniamc.scheduler.types.pack");
 
-        BasicDelayCarrier.doSomething();
+        new AnotherObject().someDelayedMethod();
+        new AnotherObject().someSuperDelayedMethod();
 
-        assertEquals(1, SchedulerController.INSTANCE.delayedElements.size());
+        assertEquals(2, SchedulerController.INSTANCE.delayedElements.size());
     }
 
     @Test
     @SneakyThrows
     public void delayedMethodGetsDelayed() {
-        SchedulerController.INSTANCE.registerDelayedMethodsIn("net.eterniamc.scheduler.types.DelayCarrier");
+        SchedulerController.INSTANCE.processAnnotationsFor("net.eterniamc.scheduler.types.DelayCarrier");
 
         DelayCarrier object = new DelayCarrier();
 

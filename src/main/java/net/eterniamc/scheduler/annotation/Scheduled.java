@@ -12,32 +12,32 @@ public @interface Scheduled {
     /**
      * @return The rate of refresh in ticks
      */
-    long ticks() default 0;
+    double ticks() default 0;
 
     /**
      * @return The rate of refresh in milliseconds
      */
-    long milliseconds() default 0;
+    double milliseconds() default 0;
 
     /**
      * @return The rate of refresh in seconds
      */
-    long seconds() default 0;
+    double seconds() default 0;
 
     /**
      * @return The rate of refresh in minutes
      */
-    long minutes() default 0;
+    double minutes() default 0;
 
     /**
      * @return The rate of refresh in hours
      */
-    long hours() default 0;
+    double hours() default 0;
 
     /**
      * @return The rate of refresh in
      */
-    long days() default 0;
+    double days() default 0;
 
     /**
      * @return Whether the method should be executed asynchronously
